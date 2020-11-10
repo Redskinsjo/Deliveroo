@@ -1,32 +1,18 @@
-import React, { useState, useEffect } from "react";
-import Axios from "axios";
+import React from "react";
 import Dish from "./Dish";
 
-const Category = ({ name, index }) => {
-  const [data, setData] = useState({});
-  const [isLoading, setIsLoading] = useState(true);
-
-  const fetchData = async () => {
-    const response = await Axios.get(
-      "https://lereacteur-backend-deliveroo.herokuapp.com/"
-    );
-    setData(response.data);
-    setIsLoading(false);
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
-
+const Category = ({ cart, setCart, data, isLoading, name, index }) => {
   let renderDishes;
   if (!isLoading) {
-    renderDishes = data.categories[index].meals.map((dish, index) => {
+    renderDishes = data[index].meals.map((dish, index) => {
       return (
         <Dish
+          cart={cart}
+          setCart={setCart}
           key={index}
           name={dish.title}
           description={dish.description}
-          price={dish.price}
+          price={Number(dish.price).toFixed(2)}
           isPopular={dish.popular}
           picture={dish.picture}
         />
@@ -43,7 +29,7 @@ const Category = ({ name, index }) => {
         style={{
           display: "flex",
           flexWrap: "wrap",
-          justifyContent: "space-between",
+          justifyContent: "space-around",
         }}
       >
         {renderDishes}

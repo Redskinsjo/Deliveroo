@@ -1,23 +1,22 @@
-import React, { useState, useEffect } from "react";
-import Axios from "axios";
+import React from "react";
 import NotImage from "../assets/not-image.jpg";
 import Logo from "../assets/logo.svg";
 
-const Header = () => {
-  const [data, setData] = useState({});
-  const [isLoading, setIsLoading] = useState(true);
+const Header = ({ data, isLoading }) => {
+  // const [data, setData] = useState({});
+  // const [isLoading, setIsLoading] = useState(true);
 
-  const fetchData = async () => {
-    const response = await Axios.get(
-      "https://lereacteur-backend-deliveroo.herokuapp.com/"
-    );
-    setData(response.data);
-    setIsLoading(false);
-  };
+  // const fetchData = async () => {
+  //   const response = await Axios.get(
+  //     "https://lereacteur-backend-deliveroo.herokuapp.com/"
+  //   );
+  //   setData(response.data);
+  //   setIsLoading(false);
+  // };
 
-  useEffect(() => {
-    fetchData();
-  }, []);
+  // useEffect(() => {
+  //   fetchData();
+  // }, []);
 
   return (
     <div className="container">
@@ -42,18 +41,16 @@ const Header = () => {
           <h1
             style={{ margin: "25px 0", fontSize: "33px", fontWeight: "bold" }}
           >
-            {!isLoading ? data.restaurant.name : "en cours de chargement"}
+            {!isLoading ? data.name : "en cours de chargement"}
           </h1>
           <p style={{ fontSize: "19px" }}>
             {" "}
-            {!isLoading
-              ? data.restaurant.description
-              : "en cours de chargement"}
+            {!isLoading ? data.description : "en cours de chargement"}
           </p>
         </div>
         <img
           style={{ width: "350px", borderRadius: "5px" }}
-          src={!isLoading ? data.restaurant.picture : NotImage}
+          src={!isLoading ? data.picture : NotImage}
           alt="not-available"
         />
       </div>

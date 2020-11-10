@@ -1,28 +1,26 @@
-import React, { useState, useEffect } from "react";
-import Axios from "axios";
+import React, { useState } from "react";
 import Category from "./Category";
+import Cart from "./Cart/Cart";
 
-const Main = () => {
-  const [data, setData] = useState({});
-  const [isLoading, setIsLoading] = useState(true);
-
-  const fetchData = async () => {
-    const response = await Axios.get(
-      "https://lereacteur-backend-deliveroo.herokuapp.com/"
-    );
-    setData(response.data);
-    setIsLoading(false);
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
+const Main = ({ data, isLoading }) => {
+  const [cart, setCart] = useState([]);
 
   let renderCategories;
   if (!isLoading) {
-    renderCategories = data.categories.map((categ, index) => {
+    renderCategories = data.map((categ, index) => {
       if (categ.meals.length === 0) return;
-      else return <Category key={index} name={categ.name} index={index} />;
+      else
+        return (
+          <Category
+            cart={cart}
+            setCart={setCart}
+            data={data}
+            isLoading={isLoading}
+            key={index}
+            name={categ.name}
+            index={index}
+          />
+        );
     });
   }
   return (
@@ -32,6 +30,7 @@ const Main = () => {
           <div style={{ width: "calc(100% - 385px)", marginRight: "35px" }}>
             {renderCategories}
           </div>
+          <Cart cart={cart} setCart={setCart} />
         </div>
       </div>
     </div>

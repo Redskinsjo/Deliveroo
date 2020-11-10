@@ -1,12 +1,33 @@
 import React from "react";
 import NotImage from "../assets/not-image.jpg";
 
-const Dish = ({ name, description, price, isPopular, picture }) => {
+const Dish = ({
+  cart,
+  setCart,
+  name,
+  description,
+  price,
+  isPopular,
+  picture,
+}) => {
   let desc = "";
   for (let i = 0; i < description.length; i++) {
     if (i <= 49) desc = desc + description[i];
     else break;
   }
+
+  const handleClick = (e) => {
+    const newObj = [...cart];
+    if (newObj.length > 0) {
+      const item = newObj.find((item) => item.name === name);
+      if (item) item.quantity++;
+      else newObj.push({ quantity: 1, name, description, price, isPopular });
+    } else {
+      newObj.push({ quantity: 1, name, description, price, isPopular });
+    }
+    setCart(newObj);
+  };
+
   return (
     <div
       style={{
@@ -18,6 +39,7 @@ const Dish = ({ name, description, price, isPopular, picture }) => {
         borderRadius: "5px",
         justifyContent: "space-between",
       }}
+      onClick={handleClick}
     >
       <div
         style={{
@@ -33,6 +55,8 @@ const Dish = ({ name, description, price, isPopular, picture }) => {
           style={{ fontSize: "18px", display: "flex", alignItems: "center" }}
         >
           <span style={{ padding: "5px" }}>{price}</span>
+          <i className="fas fa-euro-sign"></i>
+
           {isPopular ? (
             <i
               style={{
@@ -40,7 +64,7 @@ const Dish = ({ name, description, price, isPopular, picture }) => {
                 fontSize: "14px",
                 paddingLeft: "10px",
               }}
-              class="fas fa-star"
+              className="fas fa-star"
             ></i>
           ) : null}
           <span style={{ color: "#FF8000", fontSize: "14px" }}>
