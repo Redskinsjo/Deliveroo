@@ -16,6 +16,9 @@
 span {
   padding: 6px;
 }
+.cart-item-plus-minus > i {
+  cursor: pointer;
+}
 .cart-item-plus-minus > span:last-child {
   padding-left: 10px;
 }

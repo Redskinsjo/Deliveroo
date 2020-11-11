@@ -38,6 +38,7 @@ const Dish = ({
         marginBottom: "35px",
         borderRadius: "5px",
         justifyContent: "space-between",
+        cursor: "pointer",
       }}
       onClick={handleClick}
     >
