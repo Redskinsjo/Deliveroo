@@ -29,7 +29,9 @@ const Cart = ({ cart, setCart }) => {
 
   return (
     <div className="cart-container">
-      <button>Valider mon panier</button>
+      <button className={cart.length === 0 ? "emptyCart" : "notEmptyCart"}>
+        Valider mon panier
+      </button>
       {cart.length === 0 ? null : (
         <div>
           <div className="cart-items">{renderItems}</div>
